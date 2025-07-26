@@ -2,7 +2,7 @@ export const metadata = { title: 'Publications' };
 
 export default function Publications() {
   return (
-    <div className="space-y-8">
+    <div className="prose dark:prose-invert space-y-8">
       <h1 className="text-3xl font-bold">Publications</h1>
       <section className="space-y-2">
         <p>
