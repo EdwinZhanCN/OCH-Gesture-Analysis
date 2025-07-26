@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # All `run:` steps will execute in `web/`
+    # run all `run:` steps under web/
     defaults:
       run:
         working-directory: web
@@ -28,18 +28,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Detect package manager
-        id: detect-package-manager
+        id: detect-pm
         run: |
           if [ -f yarn.lock ]; then
             echo "manager=yarn"    >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn"     >> $GITHUB_OUTPUT
           elif [ -f package.json ]; then
-            echo "manager=npm"     >> $GITHUB_OUTPUT
-            echo "command=ci"      >> $GITHUB_OUTPUT
+            echo "manager=npm"             >> $GITHUB_OUTPUT
+            echo "command=ci"              >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
-            echo "Unable to determine package manager" >&2
+            echo "No lockfile found" >&2
             exit 1
           fi
 
@@ -47,10 +47,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: ${{ steps.detect-pm.outputs.manager }}
           cache-dependency-path: |
             web/${{ 
-              steps.detect-package-manager.outputs.manager == 'yarn' && 'yarn.lock' || 'package-lock.json'
+              steps.detect-pm.outputs.manager == 'yarn' && 'yarn.lock' || 'package-lock.json'
             }}
 
       - name: Setup Pages
@@ -70,15 +70,14 @@ jobs:
               ${{ hashFiles('web/**/package-lock.json','web/**/yarn.lock') }}-
 
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: ${{ steps.detect-pm.outputs.manager }} ${{ steps.detect-pm.outputs.command }}
 
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Build (static export)
+        run: ${{ steps.detect-pm.outputs.runner }} next build
 
-      - name: Export static site
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+      # no `next export` step needed!
 
-      - name: Upload Pages artifact
+      - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
           path: web/out
