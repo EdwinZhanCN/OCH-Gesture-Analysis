@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { Inter } from "next/font/google";
@@ -11,6 +11,17 @@ export const metadata: Metadata = {
   description: "Template research site",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8f8f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +32,9 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <Providers>
           <Nav />
-          <main className="container mx-auto max-w-3xl px-4 py-8">{children}</main>
+          <main className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
