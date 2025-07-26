@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Gesture Research",
@@ -14,9 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         <Nav />
-        <main className="container mx-auto px-4 py-8">{children}</main>
+        <main className="container mx-auto max-w-3xl px-4 py-8">{children}</main>
       </body>
     </html>
   );
