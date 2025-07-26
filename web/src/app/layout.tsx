@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { Inter } from "next/font/google";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <Nav />
-        <main className="container mx-auto max-w-3xl px-4 py-8">{children}</main>
+        <Providers>
+          <Nav />
+          <main className="container mx-auto max-w-3xl px-4 py-8">{children}</main>
+        </Providers>
       </body>
     </html>
   );
