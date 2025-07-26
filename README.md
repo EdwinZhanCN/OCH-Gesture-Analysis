@@ -1,8 +1,10 @@
 # Gesture-Analysis
 
-This repository includes a minimal Next.js template website located in the `web` folder. The template provides
-a multi-tab layout with pages for Home, Research, Publications, About and Resources. Each page contains placeholder
-sections for content such as research highlights, methodology, demo links and related publications.
+This repository includes a minimal Next.js website located in the `web` folder.
+It offers a simple multi-tab layout with pages for Home, Research, Publications,
+About and Resources. Each page contains placeholder sections for research
+highlights, methodology overviews, demos and related publications.
+
 
 To run the site locally:
 

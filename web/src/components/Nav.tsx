@@ -10,12 +10,18 @@ export default function Nav() {
   ];
 
   return (
-    <nav className="flex gap-4 p-4 border-b mb-8">
-      {links.map(({ href, label }) => (
-        <Link key={href} href={href} className="text-blue-700 hover:underline">
-          {label}
-        </Link>
-      ))}
+    <nav className="sticky top-0 bg-white border-b shadow-sm z-10">
+      <div className="container mx-auto flex gap-6 px-4 py-3">
+        {links.map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className="text-gray-700 hover:text-blue-600 font-medium"
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
     </nav>
   );
 }
